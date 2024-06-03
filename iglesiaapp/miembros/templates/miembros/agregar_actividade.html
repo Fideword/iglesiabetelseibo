@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Enlace a CSS -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'miembros/style/styles.css' %}">
+
+    <!-- Enlace a Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Enlace al favicon -->
+    <link rel="icon" href="/static/img/logo-iglesia.ico" type="image/x-icon">
+    
+    <title>Agregar Actividad</title>
+
+</head>
+<body>
+    <div class="menu-mobile">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+                
+            <div class="dropdown ml-3 mt-0">
+                <button class="dropbtn"><img src="/static/img/menu.png" alt="Icono" width="30" height="30"></button>
+                <div class="dropdown-content">
+                    <a href="{% url 'index' %}" class="btn-link">
+                        <img src="/static/img/inicio.png" width="24" height="24" alt="Inicio"><br>Inicio</a>
+                    
+                        {% load custom_tags %}
+                        {% if request.user.is_authenticated %}
+                        <!-- Enlace solo para usuarios autenticados -->
+                    <a href="{% url 'lista_miembros' %}" class="btn-link">
+                        <img src="/static/img/miembros.png" width="25" height="25" alt="Miembros"><br>Miembros</a>
+                        {% endif %}
+                    
+                    <a href="{% url 'servicio' %}" class="btn-link">
+                        <img src="/static/img/cultos.png" width="24" height="24" alt="Servicios"><br>Servicios</a>
+                    
+                    <a href="{% url 'actividade' %}" class="btn-link">
+                        <img src="/static/img/actividades.png" width="27" height="27" alt="Actividades"><br>Actividades</a>
+                    
+                    <a href="{% url 'socie' %}" class="btn-link">
+                        <img src="/static/img/sociedades.png" width="28" height="28" alt="Sociedades"><br>Sociedades</a>
+                    
+                    <a href="{% url 'minist' %}" class="btn-link">
+                        <img src="/static/img/ministerios.png" width="24" height="24" alt="Ministerios"><br>Ministerios</a>
+                    
+                    <a href="{% url 'esc_dom' %}" class="btn-link">
+                        <img src="/static/img/escuela.png" width="27" height="27" alt="Escuela Dominical"><br>Escuela Dominical</a>
+                    
+                        {% if not request.user.is_authenticated %}
+                        <!-- Contenido para usuarios no autenticados -->
+                        <a href="{% url 'contacto' %}" class="btn-link">
+                            <img src="/static/img/contacto.png" width="27" height="27" alt="Contacto"><br>Contacto</a>
+                    {% elif request.user|es_administrador %}
+                        <!-- Contenido para administradores -->
+                        <a href="{% url 'ver_mensajes' %}" class="btn-link">
+                            <img src="/static/img/mensaje.png" width="24" height="24" alt="Mensajes"><br>Mensajes</a>
+                    {% else %}
+                        <!-- Contenido para usuarios autenticados normales -->
+                        <a href="{% url 'contacto' %}" class="btn-link">
+                            <img src="/static/img/contacto.png" width="27" height="27" alt="Contacto"><br>Contacto</a>
+                    {% endif %}
+
+                    {% if not request.user.is_authenticated %}
+                        <!-- Enlace solo para usuarios no autenticados -->
+                        <a href="{% url 'sobre_nosotros' %}" class="btn-link">
+                            <img src="/static/img/informaciones.png" width="27" height="27" alt="Escuela Dominical"><br>Sobre Nosotros</a>
+                    {% endif %}
+                                        
+                        {% if not request.user.is_authenticated %}
+                        <!-- Contenido para usuarios no autenticados -->
+                        <a href="{% url 'principal' %}" class="btn-link">
+                            <img src="/static/img/iniciar_seccion.png" width="25" height="25" alt="Cerrar Sección"><br>Iniciar Sección</a>
+                    {% else %}
+                        <!-- Contenido para usuarios autenticados -->
+                        <a href="{% url 'logout' %}" class="btn-link">
+                            <img src="/static/img/cerrar_seccion1.png" width="24" height="24" alt="Cerrar Sección"><br>Cerrar Sección</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="usuario mt-2" style="text-align: right; margin-right: 10px;">
+                {% if user.is_authenticated %}
+                    <p>Bienvenido, {{ user.username }} <a href="{% url 'logout' %}">
+                        <img src="/static/img/cerrar_seccion.png" width="30" height="30"></a></p>
+                {% endif %}
+            </div>
+        </div><br><br><br><br><br>
+    </div>
+
+    <div class="menu-desktop">
+        <div class="banner1">
+            <header class="text-white py-3"><b>
+                <div class="container d-flex align-items-center justify-content-between">
+                    <nav>
+                        <a href="{% url 'index' %}" class="btn-link">
+                            <img src="/static/img/logo-iglesia.png" alt="Iglesia Asamblea de Dios Bet-El"></a>
+                            
+                            {% load custom_tags %}
+                        {% if request.user.is_authenticated %}
+                            <!-- Enlace solo para usuarios autenticados -->
+                            <a href="{% url 'lista_miembros' %}" class="text-black">MIEMBROS</a>
+                        {% endif %}
+                        
+                        <a href="{% url 'servicio' %}" class="text-black">SERVICIOS</a>
+                        <a href="{% url 'actividade' %}" class="text-black">ACTIVIDADES</a>
+                        <a href="{% url 'socie' %}" class="text-black">SOCIEDADES</a>
+                        <a href="{% url 'minist' %}" class="text-black">MINISTERIOS</a>
+                        <a href="{% url 'esc_dom' %}" class="text-black">ESCUELA DOMINICAL</a>
+                        
+                        {% if not request.user.is_authenticated %}
+                            <!-- Contenido para usuarios no autenticados -->
+                            <a href="{% url 'contacto' %}" class="text-black">CONTACTO</a>
+                        {% elif request.user|es_administrador %}
+                            <!-- Contenido para administradores -->
+                            <a href="{% url 'ver_mensajes' %}" class="text-black">MENSAJES</a>
+                        {% else %}
+                            <!-- Contenido para usuarios autenticados normales -->
+                            <a href="{% url 'contacto' %}" class="text-black">CONTACTO</a>
+                        {% endif %}
+
+                        {% if not request.user.is_authenticated %}
+                            <!-- Enlace solo para usuarios no autenticados -->
+                            <a href="{% url 'sobre_nosotros' %}" class="text-black">SOBRE NOSOTROS</a>
+                        {% endif %}
+                    </nav>
+                </div>
+                
+                {% if not request.user.is_authenticated %}
+                    <!-- Contenido para usuarios no autenticados -->
+                    <div class="text-black" style="text-align: right; position: relative; top: -80px; margin-right: -60px;">
+                            <p>Iniciar Seccion <a href="{% url 'principal' %}">
+                                <img src="/static/img/cerrar_seccion.png" width="30" height="30"></a></p>
+                    </div>
+                {% else %}
+                    <!-- Contenido para usuarios autenticados -->
+                    <div class="text-black" style="text-align: right; position: relative; top: -80px; margin-right: -60px;">
+                        {% if user.is_authenticated %}
+                            <p>Bienvenido, {{ user.username }} <a href="{% url 'logout' %}">
+                                <img src="/static/img/cerrar_seccion.png" width="30" height="30"></a></p>
+                        {% endif %}
+                    </div>
+                {% endif %} 
+            </header></b>
+        </div>
+    </div>
+
+    <div style="margin-top: -100px;"></div>
+    <div class="container mt-4">
+        <h2 class="text-primary">Agregar Actividad</h2>
+        
+        <form method="post" enctype="multipart/form-data" class="mt-2">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" id="btn-accion1" class="btn btn-success mb-3">Agregar</button>
+            <input type="button" value="Volver Atras" onClick="history.go(-1);" id="btn-accion2" class="btn btn-primary mb-3">
+            <a href="{% url 'logout' %}" id="btn-accion3" class="btn btn-danger mb-3">Cerrar Sesión</a>
+        </form>
+    </div>
+
+    <!-- Texto final -->    
+    <div class="none">
+        <h5 class="text-light mb-1">© 2023. Iglesia Asamblea de Dios Bet-El - Todos Los Derechos Reservados.</h5>
+
+        <div class="redes text-center">
+            <a href="https://www.facebook.com/betelseibo" target="_blank">
+                <img src="/static/img/facebook.png" width="31" height="31">
+            </a>
+            <a href="https://instagram.com/betelseibo" target="_blank">
+                <img src="/static/img/instagram.png" width="30" height="30">
+            </a>
+        </div>
+    </div>
+</body>
+</html>
